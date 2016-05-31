@@ -20,12 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-            "sngrl\\php-firebase-cloud-messaging\\": "src/"
+            "sngrl\\PhpFirebaseCloudMessaging\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "sngrl\\php-firebase-cloud-messaging\\Tests\\": "tests/"
+            "sngrl\\PhpFirebaseCloudMessaging\\Tests\\": "tests/"
         }
     }
 }
