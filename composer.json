@@ -1,0 +1,31 @@
+{
+    "name": "sngrl/php-firebase-cloud-messaging",
+    "description": "PHP API for Firebase Cloud Messaging from Google",
+    "license": "MIT",
+    "keywords": ["PHP","FCM","Google","Firebase","Cloud","Notifications","Android","iOS","Chrome"],
+    "homepage": "https://github.com/sngrl/php-firebase-cloud-messaging",
+    "authors": [
+        {
+            "name": "Sngrl",
+            "email": "i@sngrl.ru"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "*",
+        "php": ">=5.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "mockery/mockery" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "sngrl\\php-firebase-cloud-messaging\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "sngrl\\php-firebase-cloud-messaging\\Tests\\": "tests/"
+        }
+    }
+}
