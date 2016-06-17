@@ -9,6 +9,8 @@ use GuzzleHttp;
 class Client implements ClientInterface
 {
     const DEFAULT_API_URL = 'https://fcm.googleapis.com/fcm/send';
+    const DEFAULT_TOPIC_ADD_SUBSCRIPTION_API_URL = 'https://iid.googleapis.com/iid/v1:batchAdd';
+    const DEFAULT_TOPIC_REMOVE_SUBSCRIPTION_API_URL = 'https://iid.googleapis.com/iid/v1:batchRemove';
 
     private $apiKey;
     private $proxyApiUrl;
@@ -68,6 +70,58 @@ class Client implements ClientInterface
             ]
         );
     }
+
+    /**
+     * @param integer $topic_id
+     * @param array|string $recipients_tokens
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function addTopicSubscription($topic_id, $recipients_tokens)
+    {
+        return $this->processTopicSubscription($topic_id, $recipients_tokens, self::DEFAULT_TOPIC_ADD_SUBSCRIPTION_API_URL);
+    }
+
+
+    /**
+     * @param integer $topic_id
+     * @param array|string $recipients_tokens
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function removeTopicSubscription($topic_id, $recipients_tokens)
+    {
+        return $this->processTopicSubscription($topic_id, $recipients_tokens, self::DEFAULT_TOPIC_REMOVE_SUBSCRIPTION_API_URL);
+    }
+
+
+    /**
+     * @param integer $topic_id
+     * @param array|string $recipients_tokens
+     * @param string $url
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function processTopicSubscription($topic_id, $recipients_tokens, $url)
+    {
+        if (!is_array($recipients_tokens))
+            $recipients_tokens = [$recipients_tokens];
+
+        return $this->guzzleClient->post(
+            $url,
+            [
+                'headers' => [
+                    'Authorization' => sprintf('key=%s', $this->apiKey),
+                    'Content-Type' => 'application/json'
+                ],
+                'body' => json_encode([
+                    'to' => '/topics/' . $topic_id,
+                    'registration_tokens' => $recipients_tokens,
+                ])
+            ]
+        );
+    }
+
 
     private function getApiUrl()
     {
