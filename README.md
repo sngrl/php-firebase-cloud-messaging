@@ -53,7 +53,7 @@ use sngrl\PhpFirebaseCloudMessaging\Notification;
 
 $server_key = '_YOUR_SERVER_KEY_';
 $client = new Client();
-$client->setserver_key($server_key);
+$client->setApiKey($server_key);
 $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
 $message = new Message();
@@ -64,5 +64,31 @@ $message
 ;
 
 $response = $client->send($message);
+var_dump($response->getStatusCode());
+```
+
+#Subscribe user to the topic
+```
+use sngrl\PhpFirebaseCloudMessaging\Client;
+
+$server_key = '_YOUR_SERVER_KEY_';
+$client = new Client();
+$client->setApiKey($server_key);
+$client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
+
+$response = $client->addTopicSubscription('_SOME_TOPIC_ID_', ['_FIRST_TOKEN_', '_SECOND_TOKEN_']);
+var_dump($response->getStatusCode());
+```
+
+#Remove user subscription to the topic
+```
+use sngrl\PhpFirebaseCloudMessaging\Client;
+
+$server_key = '_YOUR_SERVER_KEY_';
+$client = new Client();
+$client->setApiKey($server_key);
+$client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
+
+$response = $client->removeTopicSubscription('_SOME_TOPIC_ID_', ['_FIRST_TOKEN_', '_SECOND_TOKEN_']);
 var_dump($response->getStatusCode());
 ```
