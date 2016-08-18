@@ -32,6 +32,7 @@ $client->setApiKey($server_key);
 $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
 $message = new Message();
+$message->setPriority('high');
 $message->addRecipient(new Device('_YOUR_DEVICE_TOKEN_'));
 $message
     ->setNotification(new Notification('some title', 'some body'))
@@ -40,6 +41,7 @@ $message
 
 $response = $client->send($message);
 var_dump($response->getStatusCode());
+var_dump($response->getBody()->getContents());
 ```
 
 #Send message to Topic
@@ -57,6 +59,7 @@ $client->setApiKey($server_key);
 $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
 $message = new Message();
+$message->setPriority('high');
 $message->addRecipient(new Topic('_YOUR_TOPIC_'));
 $message
     ->setNotification(new Notification('some title', 'some body'))
@@ -65,6 +68,7 @@ $message
 
 $response = $client->send($message);
 var_dump($response->getStatusCode());
+var_dump($response->getBody()->getContents());
 ```
 
 #Subscribe user to the topic
@@ -78,6 +82,7 @@ $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
 $response = $client->addTopicSubscription('_SOME_TOPIC_ID_', ['_FIRST_TOKEN_', '_SECOND_TOKEN_']);
 var_dump($response->getStatusCode());
+var_dump($response->getBody()->getContents());
 ```
 
 #Remove user subscription to the topic
@@ -91,4 +96,5 @@ $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
 $response = $client->removeTopicSubscription('_SOME_TOPIC_ID_', ['_FIRST_TOKEN_', '_SECOND_TOKEN_']);
 var_dump($response->getStatusCode());
+var_dump($response->getBody()->getContents());
 ```
