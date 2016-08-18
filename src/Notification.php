@@ -12,11 +12,14 @@ class Notification extends Message
     private $icon;
     private $sound;
     private $clickAction;
+    private $tag;
 
-    public function __construct($title, $body)
+    public function __construct($title = '', $body = '')
     {
-        $this->title = $title;
-        $this->body = $body;
+        if ($title)
+            $this->title = $title;
+        if ($body)
+            $this->body = $body;
         parent::__construct();
     }
 
@@ -68,12 +71,21 @@ class Notification extends Message
         return $this;
     }
 
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+        return $this;
+    }
+
     public function jsonSerialize()
     {
-        $jsonData = array(
-            'title' => $this->title,
-            'body' => $this->body
-        );
+        $jsonData = $this->getJsonData();
+        if ($this->title) {
+            $jsonData['title'] = $this->title;
+        }
+        if ($this->title) {
+            $jsonData['body'] = $this->body;
+        }
         if ($this->badge) {
             $jsonData['badge'] = $this->badge;
         }
@@ -85,6 +97,9 @@ class Notification extends Message
         }
         if ($this->sound) {
             $jsonData['sound'] = $this->sound;
+        }
+        if ($this->tag) {
+            $jsonData['tag'] = $this->tag;
         }
         return $jsonData;
     }
