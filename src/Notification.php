@@ -83,7 +83,7 @@ class Notification extends Message
         if ($this->title) {
             $jsonData['title'] = $this->title;
         }
-        if ($this->title) {
+        if ($this->body) {
             $jsonData['body'] = $this->body;
         }
         if ($this->badge) {
