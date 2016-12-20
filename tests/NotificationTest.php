@@ -29,4 +29,10 @@ class NotificationTest extends PhpFirebaseCloudMessagingTestCase
         $this->fixture->setIcon('name');
         $this->assertEquals(array('title' => 'foo', 'body' =>'bar', 'icon' => 'name'), $this->fixture->jsonSerialize());
     }
+
+    public function testJsonSerializeWithContentAvailable()
+    {
+        $this->fixture->setContentAvailable(true);
+        $this->assertEquals(array('title' => 'foo', 'body' =>'bar', 'content_available' => true), $this->fixture->jsonSerialize());
+    }
 }
