@@ -16,9 +16,14 @@ class Client implements ClientInterface
     private $proxyApiUrl;
     private $guzzleClient;
 
+    /**
+     * @param GuzzleHttp\ClientInterface $client
+     * @return $this
+     */
     public function injectGuzzleHttpClient(GuzzleHttp\ClientInterface $client)
     {
         $this->guzzleClient = $client;
+        return $this;
     }
 
     /**
@@ -82,7 +87,6 @@ class Client implements ClientInterface
         return $this->processTopicSubscription($topic_id, $recipients_tokens, self::DEFAULT_TOPIC_ADD_SUBSCRIPTION_API_URL);
     }
 
-
     /**
      * @param integer $topic_id
      * @param array|string $recipients_tokens
@@ -93,7 +97,6 @@ class Client implements ClientInterface
     {
         return $this->processTopicSubscription($topic_id, $recipients_tokens, self::DEFAULT_TOPIC_REMOVE_SUBSCRIPTION_API_URL);
     }
-
 
     /**
      * @param integer $topic_id
@@ -122,7 +125,9 @@ class Client implements ClientInterface
         );
     }
 
-
+    /**
+     * @return string
+     */
     private function getApiUrl()
     {
         return isset($this->proxyApiUrl) ? $this->proxyApiUrl : self::DEFAULT_API_URL;
