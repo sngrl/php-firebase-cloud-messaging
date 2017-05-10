@@ -17,6 +17,7 @@ class Message implements \JsonSerializable
     private $recipients = [];
     private $recipientType;
     private $jsonData;
+    private $badge;
 
 
     public function __construct() {
@@ -134,6 +135,20 @@ class Message implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getBadge() {
+        return $this->badge;
+    }
+
+    /**
+     * @param mixed $badge
+     */
+    public function setBadge($badge) {
+        $this->badge = $badge;
+    }
+
     public function jsonSerialize()
     {
         $jsonData = $this->jsonData;
@@ -142,7 +157,12 @@ class Message implements \JsonSerializable
             throw new \UnexpectedValueException('Message must have at least one recipient');
         }
 
-        $jsonData['to'] = $this->createTo();
+        $recipients = $this->createTo();
+        if(is_array($recipients)){
+            $jsonData['registration_ids'] = $recipients;
+        }else{
+            $jsonData['to'] = $recipients;
+        }
         if ($this->collapseKey) {
             $jsonData['collapse_key'] = $this->collapseKey;
         }
@@ -154,6 +174,9 @@ class Message implements \JsonSerializable
         }
         if ($this->notification) {
             $jsonData['notification'] = $this->notification;
+        }
+        if ($this->badge) {
+            $jsonData['badge'] = $this->badge;
         }
 
         return $jsonData;
@@ -174,6 +197,12 @@ class Message implements \JsonSerializable
             case Device::class:
                 if (count($this->recipients) == 1) {
                     return current($this->recipients)->getToken();
+                }else{
+                    $tokenArray = array();
+                    foreach($this->recipients as $recipient){
+                        array_push($tokenArray, $recipient->getToken());
+                    }
+                    return $tokenArray;
                 }
 
                 break;
