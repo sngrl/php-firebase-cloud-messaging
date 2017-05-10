@@ -17,6 +17,7 @@ class Message implements \JsonSerializable
     private $recipients = [];
     private $recipientType;
     private $jsonData;
+    private $badge;
 
 
     public function __construct() {
@@ -134,6 +135,20 @@ class Message implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getBadge() {
+        return $this->badge;
+    }
+
+    /**
+     * @param mixed $badge
+     */
+    public function setBadge($badge) {
+        $this->badge = $badge;
+    }
+
     public function jsonSerialize()
     {
         $jsonData = $this->jsonData;
@@ -159,6 +174,9 @@ class Message implements \JsonSerializable
         }
         if ($this->notification) {
             $jsonData['notification'] = $this->notification;
+        }
+        if ($this->badge) {
+            $jsonData['badge'] = $this->badge;
         }
 
         return $jsonData;
