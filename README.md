@@ -5,22 +5,22 @@ Currently this app server library only supports sending Messages/Notifications v
 
 See original Firebase docs: https://firebase.google.com/docs/
 
-#Setup
+## Setup
 Install via Composer:
-```
+```bash
 composer require sngrl/php-firebase-cloud-messaging
 ```
 
 Or add this to your composer.json and run "composer update":
 
-```
+```json
 "require": {
     "sngrl/php-firebase-cloud-messaging": "dev-master"
 }
 ```
 
-#Send message to Device
-```
+## Send message to Device
+```php
 use sngrl\PhpFirebaseCloudMessaging\Client;
 use sngrl\PhpFirebaseCloudMessaging\Message;
 use sngrl\PhpFirebaseCloudMessaging\Recipient\Device;
@@ -44,10 +44,10 @@ var_dump($response->getStatusCode());
 var_dump($response->getBody()->getContents());
 ```
 
-#Send message to Topic
+## Send message to Topic
 Currently sending to topics only supports a single topic as recipient. Mutliple topic as outlined
 in the google docs don't seem to work, yet.
-```
+```php
 use sngrl\PhpFirebaseCloudMessaging\Client;
 use sngrl\PhpFirebaseCloudMessaging\Message;
 use sngrl\PhpFirebaseCloudMessaging\Recipient\Topic;
@@ -71,8 +71,8 @@ var_dump($response->getStatusCode());
 var_dump($response->getBody()->getContents());
 ```
 
-#Subscribe user to the topic
-```
+## Subscribe user to the topic
+```php
 use sngrl\PhpFirebaseCloudMessaging\Client;
 
 $server_key = '_YOUR_SERVER_KEY_';
@@ -85,8 +85,8 @@ var_dump($response->getStatusCode());
 var_dump($response->getBody()->getContents());
 ```
 
-#Remove user subscription to the topic
-```
+## Remove user subscription to the topic
+```php
 use sngrl\PhpFirebaseCloudMessaging\Client;
 
 $server_key = '_YOUR_SERVER_KEY_';
