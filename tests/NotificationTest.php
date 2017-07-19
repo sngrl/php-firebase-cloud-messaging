@@ -35,4 +35,10 @@ class NotificationTest extends PhpFirebaseCloudMessagingTestCase
         $this->fixture->setContentAvailable(true);
         $this->assertEquals(array('title' => 'foo', 'body' =>'bar', 'content_available' => true), $this->fixture->jsonSerialize());
     }
+
+    public function testJsonSerializeWithColor()
+    {
+        $this->fixture->setColor('#FF00FF');
+        $this->assertEquals(array('title' => 'foo', 'body' =>'bar', 'color' => '#FF00FF'), $this->fixture->jsonSerialize());
+    }
 }

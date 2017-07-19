@@ -14,6 +14,7 @@ class Notification extends Message
     private $clickAction;
     private $tag;
     private $content_available;
+    private $color;
 
     public function __construct($title = '', $body = '')
     {
@@ -84,6 +85,18 @@ class Notification extends Message
         return $this;
     }
 
+    /**
+     * android only, set the notification's icon color, expressed in #rrggbb format.
+     *
+     * @param string $color
+     * @return $this
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+        return $this;
+    }
+
     public function jsonSerialize()
     {
         $jsonData = $this->getJsonData();
@@ -110,7 +123,10 @@ class Notification extends Message
         }
         if ($this->content_available) {
             $jsonData['content_available'] = $this->content_available;
-        }        
+        }
+        if ($this->color) {
+            $jsonData['color'] = $this->color;
+        }
         return $jsonData;
     }
 }
