@@ -212,7 +212,7 @@ class Message implements \JsonSerializable
                 } else {
                     $names = [];
                     foreach ($this->recipients as $recipient) {
-                        $names[] = vsprintf("'%s' in topics", $recipient->getName());
+                        $names[] = vsprintf("'%s' in topics", [$recipient->getName()]);
                     }
                     return vsprintf($this->condition, $names);
                 }                
