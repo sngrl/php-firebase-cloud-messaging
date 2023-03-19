@@ -14,6 +14,7 @@ class Notification extends Message
     private $clickAction;
     private $tag;
     private $content_available;
+    private $android_channel_id;
 
     public function __construct($title = '', $body = '')
     {
@@ -71,7 +72,17 @@ class Notification extends Message
         $this->sound = $sound;
         return $this;
     }
-
+     /**
+     * android only, set android_channel_id as string, make sure to have channel id at client side with sound=/res/raw/noti.mp3
+     * example : let channle = {id: 'panic', sound: 'noti'}
+     * @param string $channel
+     * @return $this
+     */
+    public function setChannelId($channel)
+    {
+        $this->android_channel_id = $channel;
+        return $this;
+    }
     public function setTag($tag)
     {
         $this->tag = $tag;
@@ -110,7 +121,10 @@ class Notification extends Message
         }
         if ($this->content_available) {
             $jsonData['content_available'] = $this->content_available;
-        }        
+        }
+        if ($this->android_channel_id) {
+            $jsonData['android_channel_id'] = $this->android_channel_id;
+        }   
         return $jsonData;
     }
 }

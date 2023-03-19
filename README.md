@@ -132,3 +132,53 @@ $response = $client->removeTopicSubscription('_SOME_TOPIC_ID_', ['_FIRST_TOKEN_'
 var_dump($response->getStatusCode());
 var_dump($response->getBody()->getContents());
 ```
+
+#Use custom notification sound
+This need to have channel id at notification client side.
+For example, a sample channel interface will be like:
+```
+// Example from https://github.com/dpa99c/cordova-plugin-firebasex/issues/557 plugin
+      let channel: IChannelOptions = {
+        name: 'panic',
+        id: 'panic',
+        sound: 'panic',
+        vibration: true,
+        light: true,
+        lightColor: parseInt('FF0000FF', 16).toString(),
+        badge: true,
+        importance: 4
+      };
+      this.firebase.createChannel(channel);
+  ```
+For this to work, a sound file must be stored at /res/raw/panic.mp3
+
+and server side should use same channel id.
+
+```
+use sngrl\PhpFirebaseCloudMessaging\Client;
+use sngrl\PhpFirebaseCloudMessaging\Message;
+use sngrl\PhpFirebaseCloudMessaging\Recipient\Topic;
+use sngrl\PhpFirebaseCloudMessaging\Notification;
+
+$server_key = '_YOUR_SERVER_KEY_';
+$noti = new Notification();
+$noti->setTitle('Some title');
+$noti->setBody('Some Body');
+$noti->setChannelId('panic');
+        
+$client = new Client();
+$client->setApiKey($server_key);
+$client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
+
+$message = new Message();
+$message->setPriority('high');
+$message->addRecipient(new Topic('_YOUR_TOPIC_'));
+$message
+    ->setNotification($noti)
+    ->setData(['key' => 'value'])
+;
+
+$response = $client->send($message);
+var_dump($response->getStatusCode());
+var_dump($response->getBody()->getContents());
+```
