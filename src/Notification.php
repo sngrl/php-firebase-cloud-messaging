@@ -14,6 +14,7 @@ class Notification extends Message
     private $clickAction;
     private $tag;
     private $content_available;
+    private $image;
 
     public function __construct($title = '', $body = '')
     {
@@ -84,6 +85,12 @@ class Notification extends Message
         return $this;
     }
 
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
     public function jsonSerialize()
     {
         $jsonData = $this->getJsonData();
@@ -110,6 +117,9 @@ class Notification extends Message
         }
         if ($this->content_available) {
             $jsonData['content_available'] = $this->content_available;
+        }        
+        if ($this->image) {
+            $jsonData['image'] = $this->image;
         }        
         return $jsonData;
     }
