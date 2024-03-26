@@ -19,7 +19,7 @@ class Message implements \JsonSerializable
     private $notification;
     private $collapseKey;    
     private $priority;
-    private $data;
+    private $data = [];
     private $recipients = [];
     private $recipientType;    
     private $jsonData;
@@ -71,7 +71,7 @@ class Message implements \JsonSerializable
 
     public function setData(array $data)
     {
-        $this->data = $data;
+        $this->data[] = $data;
         return $this;
     }
             
